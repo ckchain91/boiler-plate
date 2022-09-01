@@ -7,7 +7,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config()
 const indexRouter = require('./routes')
-
+const methodOverride = require('method-override')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session')
@@ -17,6 +17,7 @@ const config = require('./config/key')
 const { User } = require('./Users.js')
 const { Customer } = require('./Customers.js')
 
+app.use(methodOverride('_method'))
 app.use(morgan('dev'))
 app.use(session({ secret : process.env.SECRET_CODE, resave: true, saveUninitialized:false }));
 app.use(passport.initialize());
@@ -26,9 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true})) 
 app.set('view engine', 'ejs')
-
-const methodOverride = require('method-override')
-app.use(methodOverride('_method'))
 
 mongoose.connect(config.mongoURI, 
     { dbName: 'phum'

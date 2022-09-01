@@ -32,7 +32,7 @@
                             <a href="/" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Phum PA</a>
                         </li>
                         <li>
-                            <a href="/policy" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">약관 및 정책</a>
+                            <a href="/policy" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">PA이란?</a>
                         </li>
                         <li>
                             <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">공지사항</a>
@@ -46,10 +46,10 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="flex justify-center my-20">
             <div class="w-full max-w-xs">
-                <form action="/signup?_method=PUT" method="POST">
+                <form action="/edit?_method=PUT" method="POST">
                     <div class="mb-6">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">이메일</label>
-                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= user.email %>" name="email" required>
+                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= user.email %>" name="email" required disabled>
                         <div class="check-font text-red-500 text-xs" id="email_check"></div>
                     </div>
                     <div class="mb-6">
@@ -64,16 +64,18 @@
                         <label for="company" class="block mb-0 text-sm font-medium text-gray-900 dark:text-gray-300">회사</label>
                         <label for="company" class="block mb-0 text-xs font-medium text-gray-500 dark:text-gray-300">개인이면 개인으로 입력해주세요.</label>
                         <input type="text" id="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  value="<%= user.company %>" name="company" required>
-                    </div>  
+                    </div>
+                    <input value="<%= user._id %>" name="id" style="display : none">
                     <button type="submit" id="submitted" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >수정하기</button>
                     <a href="/logout" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">로그아웃</a>
                 </form>
-                
             </div>
         </div>
-
     </section>
-    <footer class="p-4 bg-gray-50 sm:p-6 dark:bg-gray-800">
+
+
+
+<footer class="p-4 bg-gray-50 sm:p-6 dark:bg-gray-800">
         <div class="mx-auto max-w-screen-xl">
             <div class="md:flex md:justify-between">
                 <div class="mb-6 md:mb-0">
@@ -87,7 +89,7 @@
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
                         <ul class="text-gray-600 dark:text-gray-400">
                             <li class="mb-4">
-                                <a href="/" class="hover:underline">Phum PA</a>
+                                <a href="https://pa.phum.co.kr" class="hover:underline">Phum PA</a>
                             </li>
                             <li>
                                 <a href="https://phum.co.kr" class="hover:underline">Phum Website</a>
@@ -101,7 +103,7 @@
                                 <a href="#" class="hover:underline ">Email</a>
                             </li>
                             <li>
-                                <a href="#" class="hover:underline">네이버 블로그</a>
+                                <a href="https://blog.naver.com/unitrends" class="hover:underline">네이버 블로그</a>
                             </li>
                         </ul>
                     </div>
@@ -112,7 +114,7 @@
                                 <a href="#" class="hover:underline">공지사항</a>
                             </li>
                             <li>
-                                <a href="/policy" class="hover:underline">약관 &amp; 정책</a>
+                                <a href="#" class="hover:underline">약관 &amp; 정책</a>
                             </li>
                         </ul>
                     </div>

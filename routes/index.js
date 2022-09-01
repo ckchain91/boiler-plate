@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const passport = require('passport')
+const passport = require('passport');
+const { Customer } = require('../Customers');
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../Users')
 
@@ -31,7 +32,6 @@ router.route('/signup')
         }
     )
 
-
 // 로그인
 router.route('/login')
     .get((req, res) => {
@@ -48,9 +48,11 @@ router.route('/deal')
     .get(isLogin, (req, res) => {
         res.render('deal.ejs', { user: req.user }) 
     })
-    .post((req,res) => {
-        console.log(req.body)
-        const customer = new Customer(req.body)
+    .post(isLogin,(req,res) => {
+        let customer_info = req.body
+        customer_info['me'] = req.user._id
+        console.log(customer_info)
+        const customer = new Customer(customer_info)
         customer.save((err, doc) => {
             if (err) return res.json({success: false, err})
             return res.status(200).redirect('/')
@@ -67,17 +69,6 @@ router.post('/email', (req, res) => {
     })
 })
 
-
-
-// 마이페이지 -로그인 여부 확인
-router.get('/mypage', isLogin ,(req, res)=>{
-    console.log(req.user)
-   res.render('mypage.ejs',{ user: req.user }) 
-})
-
-
-
-
 router.get('/logout',function(req, res){
     req.session.destroy(function(){
         req.session;
@@ -89,10 +80,40 @@ router.get('/fail', function(req, res){
     res.render('fail.ejs')
 })
 
+router.route('/edit')
+    .get(isLogin, (req, res) => {
+        res.render('edit.ejs',{user: req.user})
+    })
+    .put(isLogin, (req, res) => {
+        User.updateOne({ _id : req.body.id }, 
+            { $set :
+                {
+                    name: req.body.name,
+                    email: req.body.email,
+                    phone: req.body.phone,
+                    company: req.body.company,
+                }
+            }, function (err, result) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                console.log("Updated Docs : ", result);
+                res.redirect('/')
+            }
+        });
+    })
 
-router.get('/edit', (req, res) => {
-    res.render('edit.ejs',{user: req.user})
+
+router.get('/status',isLogin, (req, res) => {
+    Customer.find({me: req.user._id}, (err, result) => {
+        if(err) res.redirect('/')
+        var customer_info = {}
+        customer_info['result'] = result
+        res.render('status.ejs', {customer: customer_info})
+    })
+
 })
-
+//ppt 다운링크는 Id가 포함이 될수있도록
 
 module.exports = router;
