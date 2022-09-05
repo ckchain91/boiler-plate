@@ -18,7 +18,12 @@ router.get('/', (req, res) => {
 
 //회원가입
 router.route('/signup')
-    .get((req, res) => {
+    .get((req, res, next) => {
+        if(req.user){
+            res.redirect('/')
+        }
+        next()
+    },(req, res) => {
         res.render('signup.ejs')
     })
     .post(
