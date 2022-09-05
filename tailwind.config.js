@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./*/*/*.html","./node_modules/flowbite/**/*.js"],
+  content: ["./*/*/*.html","./node_modules/flowbite/**/*.js","./views/*.ejs"],
   theme: {
     extend: {
       fontFamily: {

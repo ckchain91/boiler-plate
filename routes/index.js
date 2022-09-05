@@ -114,6 +114,10 @@ router.get('/status',isLogin, (req, res) => {
     })
 
 })
+
+router.get('/pa-signup', (req, res) => {
+    res.sendFile(__dirname+'/template.html')
+})
 //ppt 다운링크는 Id가 포함이 될수있도록
 
 module.exports = router;
