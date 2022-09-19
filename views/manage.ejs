@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,13 +119,23 @@
                 </li>
                 <% } %>
                 </ul>
+                
                 <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>
             </div>
             <!-- ./Sidebar -->
         </sidebar>
-        <section class="h-full ml-14 mt-14 mb-10 md:ml-64">
-            
-            
+        <section class="h-full ml-14 mt-14 mb-10 md:ml-64">            
+            <div class="flex justify-center my-10">
+                <div class="w-full max-w-xs">
+                    <% for (var i = 0; i < pa_user.length; i++ ){  %>
+                        <h4><%= pa_user[i].name  %></h4>
+                        <p><%= pa_user[i].email %></p>
+                        <p><%= pa_user[i].phone %></p>
+                        <p>------------------------------<%= i+1 %>--</p>
+                    
+                    <% } %>
+                                
+            </div>
         </section>
     </div>
     
@@ -133,6 +144,10 @@
 
 </body>
 </html>
+
+
+
+
 
 
 

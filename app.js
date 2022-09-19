@@ -7,6 +7,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config()
 const indexRouter = require('./routes')
+const paRouter = require('./routes/pa')
 const methodOverride = require('method-override')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
@@ -44,7 +45,6 @@ passport.use(new LocalStrategy({
     session: true,
     passReqToCallback: false, 
 }, (email, password, done) => {
-    console.log(email, password);
     User.findOne({ email: email}, function(err, result){
         if (err) return done(err)
         if (!result) return done(null, false, { message : '존재하지않는 아이디요'})
@@ -73,6 +73,7 @@ passport.deserializeUser(function(아이디, done){ //아이디 = user._id
 });
 
 app.use('/', indexRouter)
+app.use('/pa', paRouter)
 
 app.use((req, res, next) => {
     res.status(404).send('Not Found')

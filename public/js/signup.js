@@ -1,5 +1,11 @@
+var id;
+var pw;
+var match;
+var result = id && pw && match
+
+
+
 $(function(){
-        $('#pw_check').hide();
         // $("#pw_length").hide();
         // $('#pw_blank').hide();
         // $('#pw_mix').hide();
@@ -36,23 +42,10 @@ $(function(){
         //         return true
         //     }
         // })
-        $("#confirm_password").keyup(function(){
-            var password =  $("#password").val()
-            var confirm_password =  $("#confirm_password").val()
-            if(password != "" || confirm_password != ""){
-                if(password == confirm_password){
-                    $("#pw_check").hide();
-                    $("#submitted").prop("disabled", false);
-                }else{
-                    $("#pw_check").show();
-                    $("#submitted").prop("disabled", true);
-                } 
 
-            }
-        
-        })
+
+
         $("#email").blur(function(){
-
             var user_email = $("#email").val();
             $.ajax({
                 type : 'POST',
@@ -60,13 +53,14 @@ $(function(){
                 data : {'email' : user_email}
             }).done(function(결과){
                 console.log(결과)
-                $('#submitted').prop("disabled", false);
+                // $('#submitted').prop("disabled", false);
                 $('#email_check').text("")
-               
-                
-        
+                id = true;
+                console.log("id: ", id)
+  
             }).fail(function(결과){
                 console.log(결과)
+                id = false
                 $('#email_check').text("사용중인 아이디 입니다.")
                 $('#submitted').prop("disabled", true);
                 $('#email_check').css("color","red");
@@ -76,8 +70,60 @@ $(function(){
         })
         
         $('#password').blur(function(){
-            console.log('keyup')
+            var user_password = $("#password").val();
+            $.ajax({
+                type : 'POST',
+                url : '/password',
+                data : {'password' : user_password}
+            }).done(function(결과){
+                console.log(결과)
+                // $('#submitted').prop("disabled", false);
+                $('#password_check').text("")
+                pw = true;
+                console.log("pw: ", pw)
+  
+            }).fail(function(결과){
+                console.log(결과)
+                pw = false
+                $('#password_check').text("8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+                $('#submitted').prop("disabled", true);
+                $('#password_check').css("color","red");  
+            })
         })
+
+        $("#confirm_password").keyup(function(){
+            var password =  $("#password").val()
+            var confirm_password =  $("#confirm_password").val()
+            if(password != "" || confirm_password != ""){
+                if(password == confirm_password){
+                    $("#pw_match").hide();
+                    match = true;
+                    console.log("match: ", match)
+                    console.log("result: ", id && pw && match)
+                }else{
+                    match = false;
+                    $("#pw_match").show();
+                    $("#submitted").prop("disabled", true);
+                } 
+
+            }
+        
+        })
+        $("#remember").change(function(){
+            var checked = $(this).is(':checked');
+            console.log(checked)
+            console.log(id && pw && match)
+            if(checked && id && pw && match){
+                console.log('진입')
+                $("#submitted").prop("disabled", false);
+            }
+            else{
+                console.log('불가')
+                $(this).prop("checked", false)
+                $("#submitted").prop("disabled", true);
+            }
+        })
+        
 
    }
 )
